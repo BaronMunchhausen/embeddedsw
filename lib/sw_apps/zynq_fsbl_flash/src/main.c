@@ -296,29 +296,29 @@ int main(void)
 	fsbl_printf(DEBUG_GENERAL,"Release %d.%d	%s-%s\r\n",
 			SDK_RELEASE_YEAR, SDK_RELEASE_QUARTER,
 			__DATE__,__TIME__);
-// TE Mod :
-	xil_printf("Xilinx First Stage Boot Loader (TE modified) \n\r");
+/* TE Mod:*/
+	xil_printf("Xilinx Zynq First Stage Boot Loader to write QSPI Flash (TE modified) \n\r");
 	xil_printf("Release %d.%d	%s-%s\r\n",
 			SDK_RELEASE_YEAR, SDK_RELEASE_QUARTER,
 			__DATE__,__TIME__);
-// TE Mod finished
+#define XPAR_PS7_DDR_0_S_AXI_BASEADDR 0x0
 #ifdef XPAR_PS7_DDR_0_S_AXI_BASEADDR
 
     /*
      * DDR Read/write test 
      */
-	Status = DDRInitCheck();
-	if (Status == XST_FAILURE) {
-		fsbl_printf(DEBUG_GENERAL,"DDR_INIT_FAIL \r\n");
+	// Status = DDRInitCheck();
+	// if (Status == XST_FAILURE) {
+		// fsbl_printf(DEBUG_GENERAL,"DDR_INIT_FAIL \r\n");
 		/* Error Handling here */
-		OutputStatus(DDR_INIT_FAIL);
+		// OutputStatus(DDR_INIT_FAIL);
 		/*
 		 * Calling FsblHookFallback instead of Fallback
 		 * since, devcfg driver is not yet initialized
 		 */
-		FsblHookFallback();
-	}
-
+		// FsblHookFallback();
+	// }
+/* TE Mod: finished*/
 
 	/*
 	 * PCAP initialization
@@ -390,6 +390,10 @@ int main(void)
 	 */
 	BootModeRegister = Xil_In32(BOOT_MODE_REG);
 	BootModeRegister &= BOOT_MODES_MASK;
+  
+  /* TE Mod : */
+	BootModeRegister = JTAG_MODE;
+  /* TE Mod : finished*/                        
 
 	/*
 	 * QSPI BOOT MODE

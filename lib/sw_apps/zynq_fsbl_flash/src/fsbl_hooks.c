@@ -54,9 +54,6 @@
 #include "fsbl.h"
 #include "xstatus.h"
 #include "fsbl_hooks.h"
-// TE Mod :
-#include "te_fsbl_hooks.h"                                                                               
-// TE Mod finished  
 
 /************************** Variable Definitions *****************************/
 
@@ -142,11 +139,6 @@ u32 FsblHookBeforeHandoff(void)
 	 */
 	fsbl_printf(DEBUG_INFO,"In FsblHookBeforeHandoff function \r\n");
 
-// TE Mod :
-  Status = te_FsblHookBeforeHandoff();
-// TE Mod finished  
-  
-  
 	return (Status);
 }
 
